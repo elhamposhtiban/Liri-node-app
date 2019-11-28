@@ -3,10 +3,10 @@ const Spotify = require('node-spotify-api');
 const api_keys = require("./keys");
 const axios = require("axios");
 const inquirer = require("inquirer");
-const fs = require("fs");
 const moment = require("moment");
 const present = moment().format("YYYY-MM-DD"); 
 const oneyear = moment().add(365, "days").format("YYYY-MM-DD");
+const fs = require("fs");
 
 const questions = [
    {
@@ -151,31 +151,28 @@ function start() {
         if (error) {
           return console.log(error);
         }
-        
-        const randomMovie =Math.floor(Math.random(choice)*12);
+
+        const dataArr = choice.split(", ");
+        console.log(dataArr);
+        const randomMovie = Math.floor(Math.random(dataArr)*3)
         console.log(randomMovie)
+        if (randomMovie === "concert-this") {
+            start();
+            consert();
+          }
+          if (randomMovie === "movie-this") {
+            start();
+            movie();
+          }
+          if (randomMovie === "spotify-this-song") {
+            start();
+            spotify_search();
+          }
     
+
+  
       
-            axios
-            .get(`http://www.omdbapi.com/?t=${randomMovie}&y=&plot=short&apikey=${api_keys.KEYS.OMDB_API_KEY}`)
-            .then(function(response){
-               const result=response.data;
-                console.log(
-                "\n" + "&*&*&*&*&*&*&*&*&*&*&*&* WELCOME TO LIRI MOVIE  &*&*&*&*&*&*&*&*&*&*&*&*" + "\n" + "\n" +
-                 "YOUR ANSWER IS LOADING ...." + "\n")
-                console.log("\nThe title of the movie:"+result.Title)
-                console.log("\nThe year that movie came out:"+ result.Year)
-                console.log("\nIMDB Rating of the movie:"+result.imdbRating)
-                console.log("\nRotten Tomatoes Rating of the movie:" +result.Ratings[1].Value)
-                console.log("\nCountry where the movie was produced:"+result.Country)
-                console.log("\nLanguage of the movie:"+result.Language)
-                console.log("\nPlot of the movie:"+result.Plot)
-                console.log("\nActors in the movie:"+result.Actors)
-    
-        })
-        .catch(function(err) {
-            console.log(err);
-        });
+
     })
  }
  
@@ -184,4 +181,26 @@ function start() {
 
 
 
- 
+//  for (i=0; i<dataArr.length; i++){
+//     const randomMovie = Math.floor(Math.random(dataArr)*1)
+//     axios
+//     .get(`http://www.omdbapi.com/?t=${randomMovie}&y=&plot=short&apikey=${api_keys.KEYS.OMDB_API_KEY}`)
+//     .then(function(response){
+//        const result=response.data;
+//         console.log(
+//         "\n" + "&*&*&*&*&*&*&*&*&*&*&*&* WELCOME TO LIRI MOVIE  &*&*&*&*&*&*&*&*&*&*&*&*" + "\n" + "\n" +
+//          "YOUR ANSWER IS LOADING ...." + "\n")
+//         console.log("\nThe title of the movie:"+result.Title)
+//         console.log("\nThe year that movie came out:"+ result.Year)
+//         console.log("\nIMDB Rating of the movie:"+result.imdbRating)
+//         console.log("\nRotten Tomatoes Rating of the movie:" +result.Ratings[1].Value)
+//         console.log("\nCountry where the movie was produced:"+result.Country)
+//         console.log("\nLanguage of the movie:"+result.Language)
+//         console.log("\nPlot of the movie:"+result.Plot)
+//         console.log("\nActors in the movie:"+result.Actors)
+
+// })
+// .catch(function(err) {
+//     console.log(err);
+// });
+// }
